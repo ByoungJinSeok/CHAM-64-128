@@ -88,6 +88,9 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -120,10 +123,12 @@
   <ItemGroup>
     <ClCompile Include="main.c" />
     <ClCompile Include="source\ver1_cham_64_128.c" />
+    <ClCompile Include="source\ver2_cham_64_128.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\ver1_cham_64_128.h" />
     <ClInclude Include="include\define.h" />
+    <ClInclude Include="include\ver2_cham_64_128.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

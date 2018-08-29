@@ -1,9 +1,8 @@
 #include "../include/ver1_cham_64_128.h"
 
-int key_schedule(CHAM_64 *cham, uint16 k[8])
+int ver1_key_schedule(VER1_CHAM_64 *cham, uint16 k[8])
 {
 	int i;
-
 	uint16 rk[16] = { 0, };
 
 	rk[0] = k[0] ^ ROL(k[0], 1) ^ ROL(k[0], 8);
@@ -27,27 +26,45 @@ int key_schedule(CHAM_64 *cham, uint16 k[8])
 	{
 		cham->rk[i] = rk[i];
 		rk[i] = 0;
-		//printf("rk[%d] = %04X\n", i, cham->rk[i]);
 	}
 
 	return 0;
 }
-int cham_enc(uint16 pt[4], CHAM_64 *cham)
+int ver1_cham_enc(uint16 pt[4], VER1_CHAM_64 *cham)
 {
 	int i;
+	uint16 tmp, X0, X1, X2, X3;
 
-	printf("pt = ");
-	for (i = 0; i < 4; i++)
+	X0 = pt[0];
+	X1 = pt[1];
+	X2 = pt[2];
+	X3 = pt[3];
+
+	for (i = 0; i < 80; i++)
 	{
-		printf("%04X ", pt[i]);
+		if (i % 2 == 0)
+		{
+			tmp = ROL(X1, 1) ^ cham->rk[i % 16];
+			tmp += (X0 ^ i);
+			tmp = ROL(tmp, 8);
+		}
+		else
+		{
+			tmp = ROL(X1, 8) ^ cham->rk[i % 16];
+			tmp += (X0 ^ i);
+			tmp = ROL(tmp, 1);
+		}
+
+		X0 = X1;
+		X1 = X2;
+		X2 = X3;
+		X3 = tmp;
 	}
-	printf("\n");
-	for (i = 0; i < 16; i++)
-	{
-		printf("rk[%d] = %04X\n", i, cham->rk[i]);
-	}
-	printf("\n");
 
-
-
+	pt[0] = X0;
+	pt[1] = X1;
+	pt[2] = X2;
+	pt[3] = X3;
+	
+	return 0;
 }
