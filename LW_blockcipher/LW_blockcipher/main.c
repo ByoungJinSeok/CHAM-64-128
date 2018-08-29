@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <time.h>
 #include "include\define.h"
 #include "include\ver1_cham_64_128.h"
 #include "include\ver2_cham_64_128.h"
@@ -8,12 +9,27 @@ int test_ver2_cham64(void);
 
 int main(void)
 {
+	int i;
+	clock_t start, end;
 	printf("Lightweight block cipher - CHAM64/128\n");
 
 	printf("----------------------VER 1---------------------\n");
-	test_ver1_cham64();
+	start = clock();
+	for (i = 0; i < 1000000; i++)
+	{
+		test_ver1_cham64();
+	}
+	end = clock();
+	printf("elapse clock : %d\n", (end - start));
+
 	printf("----------------------VER 2---------------------\n");
-	test_ver2_cham64();
+	start = clock();
+	for (i = 0; i < 1000000; i++)
+	{
+		test_ver2_cham64();
+	}
+	end = clock();
+	printf("elapse clock : %d\n", (end - start));
 
 	return 0;
 }
@@ -28,24 +44,24 @@ int test_ver1_cham64(void)
 		pt[4] = { 0x1100, 0x3322, 0x5544, 0x7766 };
 	VER1_CHAM_64 cham;
 
-	printf("INPUT = %04X %04X %04X %04X\n", pt[0], pt[1], pt[2], pt[3]);
-	printf("key = ");
-	for (i = 0; i < 8; i++)
-	{
-		printf("%04X ", k[i]);
-	}
-	printf("\n");
+	//printf("INPUT = %04X %04X %04X %04X\n", pt[0], pt[1], pt[2], pt[3]);
+	//printf("key = ");
+	//for (i = 0; i < 8; i++)
+	//{
+	//	printf("%04X ", k[i]);
+	//}
+	//printf("\n");
 
 	ver1_key_schedule(&cham, k);
 
-	for (i = 0; i < 16; i++)
-	{
-		printf("RK[%d] = %04X\n", i, cham.rk[i]);
-	}
+	//for (i = 0; i < 16; i++)
+	//{
+	//	printf("RK[%d] = %04X\n", i, cham.rk[i]);
+	//}
 
 	ver1_cham_enc(pt, &cham);
 
-	printf("OUTPUT = %04X %04X %04X %04X\n", pt[0], pt[1], pt[2], pt[3]);
+	//printf("OUTPUT = %04X %04X %04X %04X\n", pt[0], pt[1], pt[2], pt[3]);
 
 
 	return 0;
@@ -61,24 +77,24 @@ int test_ver2_cham64(void)
 		pt[4] = { 0x1100, 0x3322, 0x5544, 0x7766 };
 	VER2_CHAM_64 cham;
 
-	printf("INPUT = %04X %04X %04X %04X\n", pt[0], pt[1], pt[2], pt[3]);
-	printf("key = ");
-	for (i = 0; i < 8; i++)
-	{
-		printf("%04X ", k[i]);
-	}
-	printf("\n");
+	//printf("INPUT = %04X %04X %04X %04X\n", pt[0], pt[1], pt[2], pt[3]);
+	//printf("key = ");
+	//for (i = 0; i < 8; i++)
+	//{
+	//	printf("%04X ", k[i]);
+	//}
+	//printf("\n");
 
 	ver2_key_schedule(&cham, k);
 
-	for (i = 0; i < 8; i++)
-	{
-		printf("RK[%d] = %08X\n", i, cham.rk[i]);
-	}
+	//for (i = 0; i < 8; i++)
+	//{
+	//	printf("RK[%d] = %08X\n", i, cham.rk[i]);
+	//}
 
 	ver2_cham_enc(pt, &cham);
 
-	printf("OUTPUT = %04X %04X %04X %04X\n", pt[0], pt[1], pt[2], pt[3]);
+	//printf("OUTPUT = %04X %04X %04X %04X\n", pt[0], pt[1], pt[2], pt[3]);
 
 	return 0;
 }
