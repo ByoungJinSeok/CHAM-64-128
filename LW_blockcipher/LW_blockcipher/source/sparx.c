@@ -33,35 +33,29 @@ void K_4(uint16 *in_k, uint16 r)
 }
 void SPARX_KeySchedule(SPARX_RK *sparx_rk, uint16 *mk)
 {
-	uint16 i, j, k;
-	
+	uint16 i;
 
-	*((uint16 *)sparx_rk->rk + 1) = *mk;
-	*((uint16 *)sparx_rk->rk + 3) = *(mk + 1);
-	*((uint16 *)sparx_rk->rk + 5) = *(mk + 2);
-	*((uint16 *)sparx_rk->rk + 7) = *(mk + 3);
-	*((uint16 *)sparx_rk->rk + 9) = *(mk + 4);
-	*((uint16 *)sparx_rk->rk + 11) = *(mk + 5);
-	K_4(mk, 0);
-	*((uint16 *)sparx_rk->rk) = *mk;
-	*((uint16 *)sparx_rk->rk + 2) = *(mk + 1);
-	*((uint16 *)sparx_rk->rk + 4) = *(mk + 2);
-	*((uint16 *)sparx_rk->rk + 6) = *(mk + 3);
-	*((uint16 *)sparx_rk->rk + 8) = *(mk + 4);
-	*((uint16 *)sparx_rk->rk + 10) = *(mk + 5);
-	K_4(mk, 1);
-	*((uint16 *)sparx_rk->rk + 13) = *mk;
-	*((uint16 *)sparx_rk->rk + 15) = *(mk + 1);
-	*((uint16 *)sparx_rk->rk + 17) = *(mk + 2);
-	*((uint16 *)sparx_rk->rk + 19) = *(mk + 3);
-	*((uint16 *)sparx_rk->rk + 21) = *(mk + 4);
-	*((uint16 *)sparx_rk->rk + 23) = *(mk + 5);
-	K_4(mk, 2);
-	*((uint16 *)sparx_rk->rk + 12) = *mk;
-	*((uint16 *)sparx_rk->rk + 14) = *(mk + 1);
-	*((uint16 *)sparx_rk->rk + 16) = *(mk + 2);
-	*((uint16 *)sparx_rk->rk + 18) = *(mk + 3);
-	*((uint16 *)sparx_rk->rk + 20) = *(mk + 4);
-	*((uint16 *)sparx_rk->rk + 22) = *(mk + 5);
-
+	for (i = 0; i < 8; i++)
+	{
+		*((uint16 *)sparx_rk->rk + (12 * i) + 1) = *mk;
+		*((uint16 *)sparx_rk->rk + (12 * i) + 3) = *(mk + 1);
+		*((uint16 *)sparx_rk->rk + (12 * i) + 5) = *(mk + 2);
+		*((uint16 *)sparx_rk->rk + (12 * i) + 7) = *(mk + 3);
+		*((uint16 *)sparx_rk->rk + (12 * i) + 9) = *(mk + 4);
+		*((uint16 *)sparx_rk->rk + (12 * i) + 11) = *(mk + 5);
+		K_4(mk, 2*i);
+		*((uint16 *)sparx_rk->rk + (12 * i)) = *mk;
+		*((uint16 *)sparx_rk->rk + (12 * i) + 2) = *(mk + 1);
+		*((uint16 *)sparx_rk->rk + (12 * i) + 4) = *(mk + 2);
+		*((uint16 *)sparx_rk->rk + (12 * i) + 6) = *(mk + 3);
+		*((uint16 *)sparx_rk->rk + (12 * i) + 8) = *(mk + 4);
+		*((uint16 *)sparx_rk->rk + (12 * i) + 10) = *(mk + 5);
+		K_4(mk, (2 * i) + 1);
+	}
+	*((uint16 *)sparx_rk->rk + 97) = *mk;
+	*((uint16 *)sparx_rk->rk + 99) = *(mk + 1);
+	*((uint16 *)sparx_rk->rk + 96) = *(mk + 2);
+	*((uint16 *)sparx_rk->rk + 98) = *(mk + 3);
+	*((uint16 *)sparx_rk->rk + 101) = *(mk + 4);
+	*((uint16 *)sparx_rk->rk + 100) = *(mk + 5);
 }

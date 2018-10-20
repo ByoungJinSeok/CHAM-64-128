@@ -135,9 +135,11 @@ int test_sparx(void)
 	}*/
 
 	SPARX_KeySchedule(&sp, sparx_64_128_key);
-	for (i = 0; i < 12; i++)
+	for (i = 0; i < 51; i++)
 	{
 		printf("%08X ", *(sp.rk + i));
+		if ((i + 1) % 3 == 0)
+			printf("\n");
 	}
 	printf("\n");
 	printf("test!\n");
