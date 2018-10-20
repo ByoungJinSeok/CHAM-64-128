@@ -38,12 +38,14 @@ int ver2_cham_enc(uint16 pt[4], VER2_CHAM_64 *cham)
 	{
 		tmp0 = T_ROL1(pair_even) ^ cham->rk[(2*i) % 8];
 		tmp0 += (pair_odd ^ ((4 * i) << 16) ^ ((4 * i) + 2));
-		tmp0 -= (tmp0 & 0x0000FFFF) < ((pair_odd ^ ((4 * i) << 16) ^ ((4 * i) + 2)) & 0x0000FFFF) ? 0x00010000 : 0;
+		tmp0 -= (tmp0 & 0x0000FFFF) < ((pair_odd ^ ((4 * i) << 16) ^ ((4 * i) + 2)) & 0x0000FFFF)
+			? 0x00010000 : 0;
 		tmp0 = T_ROL8(tmp0);
 
 		tmp1 = T_ROL8( ( (pair_odd << 16) | (tmp0 >> 16) ) ) ^ cham->rk[((2*i)+1) % 8];
 		tmp1 += (pair_even ^ (((4 * i) + 1) << 16) ^ (((4 * i) + 3)));
-		tmp1 -= (tmp1 & 0x0000FFFF) < ((pair_even ^ (((4 * i) + 1) << 16) ^ (((4 * i) + 3))) & 0x0000FFFF) ? 0x00010000 : 0;
+		tmp1 -= (tmp1 & 0x0000FFFF) < ((pair_even ^ (((4 * i) + 1) << 16) ^ (((4 * i) + 3))) & 0x0000FFFF)
+			? 0x00010000 : 0;
 		tmp1 = T_ROL1(tmp1);
 
 		pair_odd = tmp0;
