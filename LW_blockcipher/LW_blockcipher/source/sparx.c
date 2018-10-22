@@ -59,3 +59,40 @@ void SPARX_KeySchedule(SPARX_RK *sparx_rk, uint16 *mk)
 	*((uint16 *)sparx_rk->rk + 101) = *(mk + 4);
 	*((uint16 *)sparx_rk->rk + 100) = *(mk + 5);
 }
+void SPARX_Encrypt(uint32 *pt, SPARX_RK *sparx_rk)
+{
+	uint16 tmp;
+	uint8 i, j;
+	tmp = *((uint16 *)pt);
+	*((uint16 *)pt) = *((uint16 *)pt + 3);
+	*((uint16 *)pt + 3) = tmp;
+	//step function - A^3
+	for (j = 0; j < 8; j++)
+	{
+		for (i = 0; i < 3; i++)
+		{
+			*(pt) ^= *(sparx_rk->rk + (2 * i) + (6 * j));
+			*(pt + 1) ^= *(sparx_rk->rk + (2 * i) + (6 * j) + 1);
+			*(pt) = T_ROTR7(*(pt));
+			*(pt) += *(pt + 1);
+			*(pt) -= (*(pt) & 0x0000FFFF) < ((*(pt + 1)) & 0x0000FFFF)
+				? 0x00010000 : 0;
+			*(pt + 1) = T_ROTL2(*(pt + 1)) ^ *(pt);
+		}
+		//step function - L
+		tmp = *((uint16 *)pt + 1) ^ *((uint16 *)pt + 3);
+		tmp = ROTL(tmp, 8);
+		*((uint16 *)pt + 1) ^= *((uint16 *)pt);
+		*((uint16 *)pt + 3) ^= *((uint16 *)pt + 2);
+		*((uint16 *)pt) ^= *((uint16 *)pt + 1);
+		*((uint16 *)pt + 2) ^= *((uint16 *)pt + 3);
+		*((uint16 *)pt + 1) ^= tmp;
+		*((uint16 *)pt + 3) ^= tmp;
+	}
+	*(pt) ^= sparx_rk->rk[48];
+	*(pt + 1) ^= sparx_rk->rk[49];
+	
+	tmp = *((uint16 *)pt);
+	*((uint16 *)pt) = *((uint16 *)pt + 3);
+	*((uint16 *)pt + 3) = tmp;
+}

@@ -33,14 +33,14 @@ int main(void)
 	//end = clock();
 	//printf("elapse clock : %d\n", (end - start));
 
-	printf("----------------------SPARX---------------------\n");
-	start = clock();
-	for (i = 0; i < 1; i++)
-	{
+	//printf("----------------------SPARX---------------------\n");
+	//start = clock();
+	//for (i = 0; i < 1; i++)
+	//{
 		test_sparx();
-	}
-	end = clock();
-	printf("elapse clock : %d\n", (end - start));
+	//}
+	//end = clock();
+	//printf("elapse clock : %d\n", (end - start));
 
 	return 0;
 }
@@ -114,40 +114,23 @@ int test_sparx(void)
 	uint16 sparx_64_128_key[] = { 0x0011, 0x2233, 0x4455, 0x6677, 0x8899, 0xaabb, 0xccdd, 0xeeff };
 	uint32 key[] = { 0x00112233, 0x44556677, 0x8899aabb, 0xccddeeff };
 	uint32 out_k[4] = { 0, };
-	uint16 sparx_64_128_plaintext[] = { 0x0123, 0x4567, 0x89ab, 0xcdef };
+	//uint16 sparx_64_128_plaintext[] = { 0x0123, 0x4567, 0x89ab, 0xcdef };
+	uint32 sparx_64_128_plaintext[] = { 0x01234567, 0x89abcdef };
 	uint16 sparx_64_128_ciphertext[] = { 0x2bbe, 0xf152, 0x01f5, 0x5f98 };
 	SPARX_RK sp;
+	clock_t start, end;
 	int i;
-	//printf("k = %08X %08X %08X\n", key[0], key[1], key[2]);
-	/*for (i = 0; i < 16; i++)
-	{
-		K_4(out_k, key, i);
-		printf("k = %08X %08X %08X\n", key[0], key[1], key[2]);
-		printf("k = %08X %08X %08X\n\n", out_k[0], out_k[1], out_k[2]);
-		key[0] = out_k[0]; key[1] = out_k[1]; key[2] = out_k[2]; key[3] = out_k[3];
-	}*/
-
-
-	/*for (i = 0; i < 16; i++)
-	{
-		K_4(sparx_64_128_key, i);
-		printf("rk[%d] = %04X %04X %04X %04X %04X %04X %04X %04X \n", i + 1, sparx_64_128_key[0], sparx_64_128_key[1], sparx_64_128_key[2], sparx_64_128_key[3], sparx_64_128_key[4], sparx_64_128_key[5], sparx_64_128_key[6], sparx_64_128_key[7]);
-	}*/
-
+	
+	
 	SPARX_KeySchedule(&sp, sparx_64_128_key);
-	for (i = 0; i < 51; i++)
+
+	start = clock();
+	for (i = 0; i < 1000000; i++)
 	{
-		printf("%08X ", *(sp.rk + i));
-		if ((i + 1) % 3 == 0)
-			printf("\n");
+		SPARX_Encrypt(sparx_64_128_plaintext, &sp);
 	}
-	printf("\n");
-	printf("test!\n");
-	for (i = 0; i < 4; i++)
-	{
-		printf("%08X ", *((uint32 *)sparx_64_128_key + i));
-	}
-	printf("\n");
+	end = clock();
+	printf("elapsed clock = %d\n", (end - start));
 
 
 	return 0;

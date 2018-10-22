@@ -1,6 +1,7 @@
 #ifndef _SPARX_H_
 
 #include "define.h"
+#include "time.h"
 
 #define N_BRANCHES 2
 #define N_STEPS 8
@@ -20,5 +21,6 @@ typedef struct _SPARX_RK_
 uint16* SPECKEY(uint16 *x, uint16 *y);
 void K_4(uint16 *in_k, uint16 r);
 void SPARX_KeySchedule(SPARX_RK *sparx_rk, uint16 *mk);
+void SPARX_Encrypt(uint32 *pt, SPARX_RK *sparx_rk);
 
 #endif // !_SPARX_H_
