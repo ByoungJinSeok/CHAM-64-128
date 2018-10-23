@@ -1,7 +1,6 @@
 #ifndef _SPARX_H_
 
 #include "define.h"
-#include "time.h"
 
 #define N_BRANCHES 2
 #define N_STEPS 8

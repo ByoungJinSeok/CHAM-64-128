@@ -27,6 +27,9 @@
     <ClCompile Include="source\sparx.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="source\gift.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\define.h">
@@ -39,6 +42,9 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="include\sparx.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gift.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

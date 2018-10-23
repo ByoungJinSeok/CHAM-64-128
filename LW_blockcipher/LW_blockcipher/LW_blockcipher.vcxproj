@@ -122,11 +122,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.c" />
+    <ClCompile Include="source\gift.c" />
     <ClCompile Include="source\sparx.c" />
     <ClCompile Include="source\ver1_cham_64_128.c" />
     <ClCompile Include="source\ver2_cham_64_128.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\gift.h" />
     <ClInclude Include="include\sparx.h" />
     <ClInclude Include="include\ver1_cham_64_128.h" />
     <ClInclude Include="include\define.h" />

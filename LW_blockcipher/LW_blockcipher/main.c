@@ -4,6 +4,7 @@
 #include "include\ver1_cham_64_128.h"
 #include "include\ver2_cham_64_128.h"
 #include "include\sparx.h"
+#include "include\gift.h"
 
 int test_ver1_cham64(void);
 int test_ver2_cham64(void);
@@ -11,8 +12,8 @@ int test_sparx(void);
 
 int main(void)
 {
-	int i;
-	clock_t start, end;
+	//int i;
+	//clock_t start, end;
 	//printf("Lightweight block cipher - CHAM64/128\n");
 
 	//printf("----------------------VER 1---------------------\n");
@@ -37,10 +38,13 @@ int main(void)
 	//start = clock();
 	//for (i = 0; i < 1; i++)
 	//{
-		test_sparx();
+		//test_sparx();
 	//}
 	//end = clock();
 	//printf("elapse clock : %d\n", (end - start));
+
+	printf("----------------------GIFT---------------------\n");
+	Make_T_GS();
 
 	return 0;
 }
@@ -50,7 +54,7 @@ int test_ver1_cham64(void)
 	// secret key : 0x0100 0x0302 0x0504 0x0706 0x0908 0x0b0a 0x0d0c 0x0f0e
 	// plaintext  : 0x1100 0x3322 0x5544 0x7766
 	// ciphertext : 0x453c 0x63bc 0xdcfa 0xbf4e
-	int i;
+	//int i;
 	uint16 k[8] = { 0x0100, 0x0302, 0x0504, 0x0706, 0x0908, 0x0b0a, 0x0d0c, 0x0f0e },
 		pt[4] = { 0x1100, 0x3322, 0x5544, 0x7766 };
 	VER1_CHAM_64 cham;
@@ -83,7 +87,7 @@ int test_ver2_cham64(void)
 	// secret key : 0x0100 0x0302 0x0504 0x0706 0x0908 0x0b0a 0x0d0c 0x0f0e
 	// plaintext  : 0x1100 0x3322 0x5544 0x7766
 	// ciphertext : 0x453c 0x63bc 0xdcfa 0xbf4e
-	int i;
+	//int i;
 	uint16 k[8] = { 0x0100, 0x0302, 0x0504, 0x0706, 0x0908, 0x0b0a, 0x0d0c, 0x0f0e },
 		pt[4] = { 0x1100, 0x3322, 0x5544, 0x7766 };
 	VER2_CHAM_64 cham;
